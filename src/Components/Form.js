@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
+import { calcAmmountTotal } from '../helpers';
 
-const Form = ({quantity, saveQuantity, timeToPay, saveTimeToPay}) => {
+const Form = (props) => {
+
+    const {quantity, saveQuantity, timeToPay, saveTimeToPay, saveTotalToPay, saveLoading} = props;
+
 
     //read the ammount written in the input
     const readQuantity = (e) => {
@@ -15,27 +19,39 @@ const Form = ({quantity, saveQuantity, timeToPay, saveTimeToPay}) => {
     //variable to show if error exist
     const [error, saveError] = useState(false);
 
-    //funtion to cal the loan
+    //funtion to calc the loan
     const calcLoan = e => {
         e.preventDefault();
 
+        //validation
         if(quantity === 0 || timeToPay === "") {
             saveError(true);
-            console.log("Faltan campos por llenar!!")
         } else {
             saveError(false);
+
+            //turn on the spinner
+            saveLoading(true);
+
+            //load spinner
+            setTimeout(() => {
+                //make the calc
+                const totalWithInterest = calcAmmountTotal(quantity, timeToPay);
+
+                //then when we have the total ammout we give it to the state to show it
+                saveTotalToPay(totalWithInterest);
+
+                saveLoading(false);
+            }, 2000);
+
         }
 
-
-
-
+        
+        
     }
 
     return ( 
-        
+        <Fragment>
         <form onSubmit={ calcLoan }>
-            {quantity}
-            {timeToPay}
           <div className="row">
               <div>
                   <label>Cantidad Prestamo</label>
@@ -68,6 +84,11 @@ const Form = ({quantity, saveQuantity, timeToPay, saveTimeToPay}) => {
               </div>
           </div>
         </form>
+
+        {/* error message if there is an error */}
+        { (error) ? <p className='error'>Both fields are mandatory!</p> : null }
+            
+        </Fragment>
      );
 }
  
