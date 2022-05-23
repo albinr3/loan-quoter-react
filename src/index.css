@@ -5,7 +5,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  -webkit-font-smoothing: antialiased;
+
   -moz-osx-font-smoothing: grayscale;
   background: linear-gradient(90deg, #1CB5E0 0%, #000851 100%);
   height: 100%;
@@ -22,20 +22,29 @@ h1 {
   padding: 1rem;
   border-radius: 1rem;
   margin-top: 2rem;
-  height: 100vh;
+  height: 90vh;
+  overflow: auto;
+  
 }
 
 form, .mensajes {
   padding: 2rem;
   max-width: 600px;
   margin: 0 auto;
+  
 }
 .mensajes {
   text-align: center;
+  
+
+  
 }
 .resultado {
   border: 2px solid #00b0d7;
   padding: 3rem 0;
+  
+  
+  
 }
 form label {
   text-align: center;
